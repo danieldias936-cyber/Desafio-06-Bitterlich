@@ -29,7 +29,7 @@ Processar um inventário por amostragem de Bitterlich, estimar o volume por hect
 ## 🔧 Métodos
 
 - Árvores por hectare representadas por árvore contada: Nᵢ = FAB / gᵢ.
-- Altura pela relação hipsométrica do [Desafio 02](https://github.com/danieldias936-cyber/desafio_altura) e volume pela equação de Spurr do [Desafio 04](https://github.com/danieldias936-cyber/desafio-04-volume-reduzido-e-tabela).
+- Altura pela relação hipsométrica do [Desafio 02](https://github.com/danieldias936-cyber/Desafio-02-Altura) e volume pela equação de Spurr do [Desafio 04](https://github.com/danieldias936-cyber/Desafio-04-Volume-Reduzido-e-Tabela).
 - Volume por ponto Vₕₐ = Σ Nᵢ · Vᵢ e estimativas por amostragem aleatória simples (IC de 95%).
 
 ## 📈 Principais resultados
@@ -50,7 +50,7 @@ Processar um inventário por amostragem de Bitterlich, estimar o volume por hect
 ## 📁 Estrutura do repositório
 
 ```text
-desafio-06-bitterlich/
+Desafio-06-Bitterlich/
 ├── dados/                              # colocar aqui bitterlich_talhao20.xlsx
 ├── scripts/
 │   └── 01_inventario_bitterlich.R
@@ -87,15 +87,15 @@ O script lê área, FAB e número de pontos da aba `Info_Talhao`, então process
 
 | # | Desafio | |
 |:-:|---|:-:|
-| 01 | [Diâmetro](https://github.com/danieldias936-cyber/desafio-diametro-eucalipto) | |
-| 02 | [Altura e relação hipsométrica](https://github.com/danieldias936-cyber/desafio_altura) | |
-| 03 | [Volume e forma](https://github.com/danieldias936-cyber/desafio_volume-e-forma) | |
-| 04 | [Volume reduzido e equações de volume](https://github.com/danieldias936-cyber/desafio-04-volume-reduzido-e-tabela) | |
-| 05 | [Taper e sortimento](https://github.com/danieldias936-cyber/desafio_taper_e_sortimento) | |
+| 01 | [Diâmetro](https://github.com/danieldias936-cyber/Desafio-01-Diametro) | |
+| 02 | [Altura e relação hipsométrica](https://github.com/danieldias936-cyber/Desafio-02-Altura) | |
+| 03 | [Volume e forma](https://github.com/danieldias936-cyber/Desafio-03-Volume-e-Forma) | |
+| 04 | [Volume reduzido e equações de volume](https://github.com/danieldias936-cyber/Desafio-04-Volume-Reduzido-e-Tabela) | |
+| 05 | [Taper e sortimento](https://github.com/danieldias936-cyber/Desafio-05-Taper-e-Sortimento) | |
 | **06** | **Amostragem de Bitterlich** | 📍 você está aqui |
-| 07 | [Classificação de sítios florestais](https://github.com/danieldias936-cyber/desafio-07-classificacao-sitio) | |
-| 08 | [Validação do índice de sítio](https://github.com/danieldias936-cyber/desafio-08) | |
-| 09 | [Crescimento e produção (Clutter)](https://github.com/danieldias936-cyber/desafio-09) | |
+| 07 | [Classificação de sítios florestais](https://github.com/danieldias936-cyber/Desafio-07-Classificacao-de-Sitios) | |
+| 08 | [Validação do índice de sítio](https://github.com/danieldias936-cyber/Desafio-08-Validacao-do-Sitio) | |
+| 09 | [Crescimento e produção (Clutter)](https://github.com/danieldias936-cyber/Desafio-09-Crescimento-e-Producao) | |
 
 ## 👤 Autor
 
