@@ -1,38 +1,103 @@
-# Desafio 06 — Inventário por Amostragem de Bitterlich (Talhão 20)
+<div align="center">
 
-Processamento em R do inventário do Talhão 20 (25 ha; FAB = 3 m²/ha; 25 pontos em grade de 100 × 100 m; 228 árvores contadas), com estimativa do volume por hectare, do erro de amostragem e do volume total do talhão.
+# 🌲 Desafio 06 — Amostragem de Bitterlich
 
-## Execução
+**Inventário por pontos de área basal no talhão 20**
 
-```bash
-Rscript desafio06_bitterlich.R bitterlich_talhao20.xlsx out_t20
+![R](https://img.shields.io/badge/R-4.3-276DC3?logo=r&logoColor=white) ![Disciplina](https://img.shields.io/badge/Mensura%C3%A7%C3%A3o%20Florestal-ICA%2FUFMG-2E7D32) ![Semestre](https://img.shields.io/badge/semestre-2026%2F2-6D4C41) ![Status](https://img.shields.io/badge/status-conclu%C3%ADdo%20(dados%20n%C3%A3o%20inclu%C3%ADdos)-yellow)
+
+*Disciplina Mensuração Florestal · Programa de Pós-Graduação em Ciências Florestais · ICA/UFMG*
+
+</div>
+
+> [!NOTE]
+> A planilha de campo `bitterlich_talhao20.xlsx` não está no repositório. Para reproduzir a análise, coloque-a em `dados/`. As saídas já processadas estão em `resultados/tabelas/`.
+
+## 📋 Objetivo
+
+Processar um inventário por amostragem de Bitterlich, estimar o volume por hectare, o erro de amostragem e o volume total do talhão, e discutir as limitações de usar modelos ajustados em outro talhão.
+
+## 🗂️ Dados
+
+| Variável | Valor |
+|---|---|
+| Talhão | 20 (25 ha) |
+| Fator de área basal (FAB) | 3 m²/ha |
+| Pontos | 25, em grade de 100 × 100 m |
+| Árvores contadas | 228 |
+
+## 🔧 Métodos
+
+- Árvores por hectare representadas por árvore contada: Nᵢ = FAB / gᵢ.
+- Altura pela relação hipsométrica do [Desafio 02](https://github.com/danieldias936-cyber/desafio_altura) e volume pela equação de Spurr do [Desafio 04](https://github.com/danieldias936-cyber/desafio-04-volume-reduzido-e-tabela).
+- Volume por ponto Vₕₐ = Σ Nᵢ · Vᵢ e estimativas por amostragem aleatória simples (IC de 95%).
+
+## 📈 Principais resultados
+
+| Estimativa | Valor |
+|---|:-:|
+| Volume médio | **370,13 m³/ha** |
+| Coeficiente de variação | 33,3% |
+| Erro relativo | **13,76%** |
+| IC 95% por hectare | 319,21 a 421,06 m³/ha |
+| Volume total (25 ha) | **9.253,3 m³** |
+| IC 95% do total | 7.980,2 a 10.526,4 m³ |
+
+- O erro relativo fica acima do limite usual de 10%; seriam necessários cerca de 47 pontos para atingi-lo.
+- Área basal de 27,36 m²/ha e 1.242 árvores/ha, como verificação independente.
+- Trocar Spurr por Schumacher-Hall muda o volume em apenas −1,0%, bem menos que o erro amostral.
+
+## 📁 Estrutura do repositório
+
+```text
+desafio-06-bitterlich/
+├── dados/                              # colocar aqui bitterlich_talhao20.xlsx
+├── scripts/
+│   └── 01_inventario_bitterlich.R
+├── resultados/
+│   └── tabelas/
+│       ├── arvores_processadas.csv
+│       ├── resumo_por_ponto.csv
+│       └── resumo_inventario.csv
+└── docs/
+    ├── relatorio.md
+    └── metodologia_detalhada.md
 ```
 
-Pacote necessário: `readxl`. O script é genérico. Ele lê a área, o FAB e o número de pontos da aba `Info_Talhao`, então também processa outros talhões no mesmo formato.
+## ▶️ Como executar
 
-## Fórmulas
+A partir da raiz do repositório:
 
-| Etapa | Fórmula |
-|---|---|
-| Área seccional | gᵢ = π/40000 · DAPᵢ² (m², com DAP em cm) |
-| Árvores/ha representadas | Nᵢ = FAB / gᵢ |
-| Raio limite (checagem) | Rᵢ = DAPᵢ / (2√FAB) (m). Nenhuma das 228 árvores excedeu esse raio |
-| Altura (Desafio 02, Chapman-Richards) | H = 32,7394 · (1 − e^(−0,222678·DAP))^5,332513 |
-| Volume (Desafio 04, Spurr) | V = 0,004095970 + 3,629759×10⁻⁵ · DAP² · H |
-| Volume/ha do ponto | Vₕₐ = Σ Nᵢ · Vᵢ |
-| Amostragem aleatória simples (AAS) | x̄ = ΣVₕₐ/n; s² = Σ(Vₕₐ − x̄)²/(n−1); Sx̄ = s/√n; EA = t₍n−1; 0,975₎·Sx̄; ER% = 100·EA/x̄; IC = x̄ ± EA |
-| Total do talhão | x̄ · A e (x̄ ± EA) · A, com A = 25 ha |
+```r
+install.packages(c("readxl"))
+```
 
-## Premissas
+```bash
+Rscript scripts/01_inventario_bitterlich.R dados/bitterlich_talhao20.xlsx resultados/tabelas
+```
 
-1. **Modelos do Talhão 8 reaproveitados.** Os dois talhões têm a mesma filial (2), o mesmo clone (1501), a mesma idade (7 anos), o mesmo sítio (1) e o mesmo espaçamento (3 × 3 m). Isso torna a extrapolação razoável, mas ela não foi validada com dados do Talhão 20.
-2. **Escolha da equação de volume.** O Desafio 04 selecionou Spurr porque teve o maior R² em validação cruzada (LOOCV): 0,987, com RMSE de 4,43%. Schumacher-Hall foi rodada como teste de sensibilidade.
-3. **Grade sistemática processada como AAS**, sem correção para população finita. Essa escolha é conservadora, porque tende a superestimar a variância.
-4. **Casca.** O volume segue a convenção da cubagem do Desafio 04 (Smalian sobre os diâmetros dᵢ medidos).
+O script lê área, FAB e número de pontos da aba `Info_Talhao`, então processa outros talhões no mesmo formato.
 
-## Arquivos
+## 📄 Documentos
 
-- `desafio06_bitterlich.R`: script com quatro funções: `calc_expansao`, `estima_altura`/`estima_volume`, `resumo_ponto` e `processa_aas`
-- `arvores_processadas.csv`, `resumo_por_ponto.csv`, `resumo_inventario.csv`: as três saídas exigidas no enunciado
-- `resumo_area_basal.csv`: verificação independente dos modelos (área basal G/ha e número de árvores N/ha)
-- `RELATORIO.md`: resultados e discussão
+- 📊 [Relatório](docs/relatorio.md)
+- 🔍 [Metodologia detalhada](docs/metodologia_detalhada.md)
+
+## 🧭 Série de desafios
+
+| # | Desafio | |
+|:-:|---|:-:|
+| 01 | [Diâmetro](https://github.com/danieldias936-cyber/desafio-diametro-eucalipto) | |
+| 02 | [Altura e relação hipsométrica](https://github.com/danieldias936-cyber/desafio_altura) | |
+| 03 | [Volume e forma](https://github.com/danieldias936-cyber/desafio_volume-e-forma) | |
+| 04 | [Volume reduzido e equações de volume](https://github.com/danieldias936-cyber/desafio-04-volume-reduzido-e-tabela) | |
+| 05 | [Taper e sortimento](https://github.com/danieldias936-cyber/desafio_taper_e_sortimento) | |
+| **06** | **Amostragem de Bitterlich** | 📍 você está aqui |
+| 07 | [Classificação de sítios florestais](https://github.com/danieldias936-cyber/desafio-07-classificacao-sitio) | |
+| 08 | [Validação do índice de sítio](https://github.com/danieldias936-cyber/desafio-08) | |
+| 09 | [Crescimento e produção (Clutter)](https://github.com/danieldias936-cyber/desafio-09) | |
+
+## 👤 Autor
+
+**Daniel Dias** · [@danieldias936-cyber](https://github.com/danieldias936-cyber)  
+Mestrado em Ciências Florestais — ICA/UFMG, Montes Claros (MG)
