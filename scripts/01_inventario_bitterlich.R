@@ -2,7 +2,7 @@
 # DESAFIO 06 — Processamento de Inventário por Amostragem de Bitterlich
 # Mestrado em Ciências Florestais — ICA/UFMG — Mensuração Florestal
 # -----------------------------------------------------------------------------
-# Uso:  Rscript desafio06_bitterlich.R bitterlich_talhao20.xlsx [pasta_saida]
+# Uso (a partir da raiz):  Rscript scripts/01_inventario_bitterlich.R [dados/bitterlich_talhao20.xlsx] [resultados/tabelas]
 # Entradas : planilha com as abas Info_Talhao, Pontos e Arvores
 #            + coeficientes da relação hipsométrica (Desafio 02, Talhão 8)
 #            + coeficientes da equação de volume (Desafio 04, Talhão 8)
@@ -49,8 +49,8 @@ NIVEL_CONF <- 0.95
 # 1. LEITURA DOS DADOS
 # -----------------------------------------------------------------------------
 args    <- commandArgs(trailingOnly = TRUE)
-arquivo <- if (length(args) >= 1) args[1] else "bitterlich_talhao20.xlsx"
-saida   <- if (length(args) >= 2) args[2] else "."
+arquivo <- if (length(args) >= 1) args[1] else "dados/bitterlich_talhao20.xlsx"
+saida   <- if (length(args) >= 2) args[2] else "resultados/tabelas"
 dir.create(saida, showWarnings = FALSE, recursive = TRUE)
 
 info    <- read_excel(arquivo, sheet = "Info_Talhao")
